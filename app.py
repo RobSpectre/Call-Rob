@@ -19,7 +19,7 @@ app.config.from_pyfile('local_settings.py')
 def voice():
     response = twiml.Response()
     if request.form['From'] == 'client:kristina':
-        dial = response.dial(callerId=app.config['CALLER_ID'])
+        dial = response.dial(callerId=app.config['TWILIO_CALLER_ID'])
     else:
         dial = response.dial()
     dial.number(app.config['CURRENT_NUMBER'])
@@ -63,5 +63,4 @@ if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     if port == 5000:
         app.debug = True
-    app.debug = True
     app.run(host='0.0.0.0', port=port)
