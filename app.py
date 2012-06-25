@@ -2,10 +2,10 @@ import os
 
 from flask import Flask
 from flask import render_template
-from flask import url_for
 from flask import request
 
 from twilio import twiml
+from twilio.rest import TwilioRestClient
 from twilio.util import TwilioCapability
 
 
@@ -14,27 +14,30 @@ app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('local_settings.py')
 
 
-# Voice Request URL
+# Call Rob
 @app.route('/voice', methods=['GET', 'POST'])
 def voice():
     response = twiml.Response()
-    response.say("Congratulations! You deployed the Twilio Hackpack" \
-            " for Heroku and Flask.")
+    with response.dial() as dial:
+        dial.number(app.config['CURRENT_NUMBER'])
     return str(response)
 
 
-# SMS Request URL
+# SMS Rob
 @app.route('/sms', methods=['GET', 'POST'])
 def sms():
     response = twiml.Response()
-    response.sms("Congratulations! You deployed the Twilio Hackpack" \
-            " for Heroku and Flask.")
+    client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'],
+        app.config['TWILIO_AUTH_TOKEN'])
+    client.sms.messages.create(from_=app.config['TWILIO_CALLER_ID'],
+            to=app.config['ROB_NUMBER'], body="%s: %s" % 
+                (request.form['From'], request.form['Body']))
     return str(response)
 
 
-# Twilio Client demo template
-@app.route('/client')
-def client():
+# Call Rob via web browser
+@app.route('/')
+def index():
     configuration_error = None
     for key in ('TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_APP_SID',
             'TWILIO_CALLER_ID'):
@@ -45,21 +48,11 @@ def client():
     if not configuration_error:
         capability = TwilioCapability(app.config['TWILIO_ACCOUNT_SID'],
             app.config['TWILIO_AUTH_TOKEN'])
-        capability.allow_client_incoming("joey_ramone")
+        capability.allow_client_incoming("kristina")
         capability.allow_client_outgoing(app.config['TWILIO_APP_SID'])
         token = capability.generate()
-    return render_template('client.html', token=token,
+    return render_template('index.html', token=token,
             configuration_error=configuration_error)
-
-
-# Installation success page
-@app.route('/')
-def index():
-    params = {
-        'voice_request_url': url_for('.voice', _external=True),
-        'sms_request_url': url_for('.sms', _external=True),
-        'client_url': url_for('.client', _external=True)}
-    return render_template('index.html', params=params)
 
 
 # If PORT not specified by environment, assume development config.

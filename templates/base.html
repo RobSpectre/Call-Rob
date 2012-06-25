@@ -1,18 +1,40 @@
 <!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <html>
   <head>
-      <title>{% block title %}{% endblock %} 
-          - Twilio Hackpack for Heroku and Flask</title>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} 
+          - Call Rob</title>
+    <meta name="description" content="Call Rob wherever the hell he is." />
+    <meta name="author" content="Rob Spectre" />
+
+    <link rel="stylesheet" href="/static/stylesheets/base.css">
+    <link rel="stylesheet" href="/static/stylesheets/skeleton.css">
+    <link rel="stylesheet" href="/static/stylesheets/layout.css">
+    <link rel="stylesheet" href="/static/stylesheets/index.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+
     {% block head %}{% endblock %}
     <link rel="shortcut icon" href="/static/images/favicon.ico" />
     <link rel="apple-touch-icon"
-        href="http://static1.twilio.com/packages/favicons/img/Twilio_57.png" />
-    <link rel="apple-touch-icon" sizes="72x72"
-        href="http://static1.twilio.com/packages/favicons/img/Twilio_72.png" />
-    <link rel="apple-touch-icon" sizes="114x114"
-        href="http://static0.twilio.com/packages/favicons/img/Twilio_114.png" />
+        href="/static/images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="35x35"
+        href="/static/images/apple-touch-icon-35x35.png" />
+    <link rel="apple-touch-icon" sizes="51x51"
+        href="/static/images/apple-touch-icon-51x51.png" />
   </head>
   <body>
+    <div id="container" class="container">
       {% block content %}{% endblock %}
+    </div>
+
+    {% block footer_js %}{% endblock %}
+
+<!-- i carry your heart(i carry it in my heart)  -->
+
   </body>
 </html>

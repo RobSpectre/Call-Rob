@@ -45,3 +45,8 @@ class ExampleTests(TwiMLTest):
     def test_voice(self):
         response = self.call()
         self.assertTwiML(response)
+        self.assertTrue("<Dial>" in response.data, "Did not find <Dial> verb " \
+                "in response: %s" % response.data)
+        self.assertTrue("<Number>%s</Number>" % app.config['ROB_NUMBER'] in
+                response.data, "Did not find call to Rob's number: %s" %
+                response.data)

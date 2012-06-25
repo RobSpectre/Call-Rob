@@ -1,0 +1,56 @@
+html, body {
+    background: #e1e3e3;
+    color: black;
+    font-family: Helvetica, Verdana, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Lato', Verdana, sans-serif;
+    font-weight: 900;
+    color: #94a1a4;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+}
+
+#logo, #slogan {
+    text-align: right;
+    margin: -5px 30px 0 0;
+}
+
+#call_controls {
+    margin: 80px 0 0 0;
+}
+
+.hangup {
+    display: none;
+}
+
+#container {
+    background: url('/static/images/background-1280x800.png'); 
+    height: 800px;
+}
+
+#log {
+    color: #94a1a4;
+}
+
+@media only screen and (max-width: 959px) {
+    #container {
+        background: url('/static/images/background-959x599.png'); 
+        height: 599px;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    #image {
+        background: url('/static/images/background-767x479.png'); 
+        height: 479px;
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    #image {
+        background: url('/static/images/background-479x299.png'); 
+        height: 299px;
+    }
+}
