@@ -35,6 +35,11 @@ h1, h2, h3, h4, h5 {
     margin: 0 0 0 4px;
 }
 
+.call, .hangup {
+    font-size: 24px;
+    padding: 8px 24px;
+}
+
 @media only screen and (max-width: 959px) {
     #container {
         background: url('/static/images/background-959x599.png'); 
