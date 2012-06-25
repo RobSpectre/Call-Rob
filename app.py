@@ -18,8 +18,11 @@ app.config.from_pyfile('local_settings.py')
 @app.route('/voice', methods=['GET', 'POST'])
 def voice():
     response = twiml.Response()
-    with response.dial() as dial:
-        dial.number(app.config['CURRENT_NUMBER'])
+    if request.form['From'] == 'client:kristina':
+        dial = response.dial(callerId=app.config['CALLER_ID'])
+    else:
+        dial = response.dial()
+    dial.number(app.config['CURRENT_NUMBER'])
     return str(response)
 
 
@@ -30,7 +33,7 @@ def sms():
     client = TwilioRestClient(app.config['TWILIO_ACCOUNT_SID'],
         app.config['TWILIO_AUTH_TOKEN'])
     client.sms.messages.create(from_=app.config['TWILIO_CALLER_ID'],
-            to=app.config['ROB_NUMBER'], body="%s: %s" % 
+            to=app.config['CURRENT_NUMBER'], body="%s: %s" %
                 (request.form['From'], request.form['Body']))
     return str(response)
 

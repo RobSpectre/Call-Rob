@@ -1,6 +1,7 @@
 import unittest
 from .context import app
 
+
 class TwiMLTest(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
@@ -45,8 +46,8 @@ class ExampleTests(TwiMLTest):
     def test_voice(self):
         response = self.call()
         self.assertTwiML(response)
-        self.assertTrue("<Dial>" in response.data, "Did not find <Dial> verb " \
-                "in response: %s" % response.data)
-        self.assertTrue("<Number>%s</Number>" % app.config['ROB_NUMBER'] in
+        self.assertTrue("<Dial>" in response.data, "Did not find <Dial> " \
+                "verb in response: %s" % response.data)
+        self.assertTrue("<Number>%s</Number>" % app.config['CURRENT_NUMBER'] in
                 response.data, "Did not find call to Rob's number: %s" %
                 response.data)
