@@ -1,4 +1,5 @@
 import os
+import signal
 
 from flask import Flask
 from flask import render_template
@@ -56,6 +57,14 @@ def index():
         token = capability.generate()
     return render_template('index.html', token=token,
             configuration_error=configuration_error)
+
+
+# Handles SIGTERM so that we don't get an error when Heroku wants or needs to
+# restart the dyno
+def graceful_shutdown(signum, frame):
+    exit()
+
+signal.signal(signal.SIGTERM, graceful_shutdown)
 
 
 # If PORT not specified by environment, assume development config.
