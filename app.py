@@ -50,13 +50,25 @@ def index():
                     "%s" % key
             token = None
     if not configuration_error:
-        capability = TwilioCapability(app.config['TWILIO_ACCOUNT_SID'],
-            app.config['TWILIO_AUTH_TOKEN'])
-        capability.allow_client_incoming("kristina")
-        capability.allow_client_outgoing(app.config['TWILIO_APP_SID'])
-        token = capability.generate()
+        token = generateClientToken(app.config['TWILIO_ACCOUNT_SID'],
+                app.config['TWILIO_AUTH_TOKEN'])
     return render_template('index.html', token=token,
             configuration_error=configuration_error)
+
+
+# Generate Twilio Client token for mobile apps
+@app.route('/token')
+def token():
+    token = generateClientToken(app.config['TWILIO_ACCOUNT_SID'],
+        app.config['TWILIO_AUTH_TOKEN'])
+    return token
+
+
+def generateClientToken(account_sid, auth_token):
+    capability = TwilioCapability(account_sid, auth_token)
+    capability.allow_client_incoming("kristina")
+    capability.allow_client_outgoing(app.config['TWILIO_APP_SID'])
+    return capability.generate()
 
 
 # Handles SIGTERM so that we don't get an error when Heroku wants or needs to

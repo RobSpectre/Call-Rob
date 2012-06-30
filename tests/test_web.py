@@ -11,6 +11,6 @@ class ExampleTests(WebTest):
         response = self.app.get('/')
         self.assertEqual("200 OK", response.status)
 
-    def test_client(self):
-        response = self.app.get('/client')
+    def test_token(self):
+        response = self.app.get('/token')
         self.assertEqual("200 OK", response.status)
